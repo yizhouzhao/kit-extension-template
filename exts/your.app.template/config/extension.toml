@@ -3,7 +3,7 @@
 version = "1.0.0"
 
 # The title and description fields are primarily for displaying extension info in UI
-title = "Simple Gear Simulator"
+title = "Your App Template"
 description="The simplest python gear extension."
 
 
@@ -28,6 +28,6 @@ keywords = ["kit", "example", "gear"]
 [dependencies]
 "omni.kit.uiapp" = {}
 
-# Main python module this extension provides, it will be publicly available as "import gear.simulator".
+# Main python module this extension provides, it will be publicly available as "import your.app.template".
 [[python.module]]
-name = "gear.simulator"
+name = "your.app.template"

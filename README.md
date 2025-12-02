@@ -29,7 +29,7 @@ The file structure of this extension should look like:
 ```
 <your-path-to-GearSimulator>
     └───exts    [Omniverse extenstion]
-         └───gear.simulator
+         └───your.app.template
                 └───config  [Extension config]
                 └───icons   [Extension icons]
                 └───gear/simulator   [source code]
@@ -46,7 +46,7 @@ The file structure of this extension should look like:
 
 2. **[Add this extension to Omniverse]** Click the  <img src="https://github.githubassets.com/images/icons/emoji/unicode/2699.png?v8" width="18"> button, add absolute extension path to `Extension Search Paths`.
 
-Finally, you can search the `gear.simulator` and enable this extension.
+Finally, you can search the `your.app.template` and enable this extension.
 
 > **Note**:
 > The extension path to add is: `<your-path-to-GearSimulator>/exts`

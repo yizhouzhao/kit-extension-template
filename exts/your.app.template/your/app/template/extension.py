@@ -34,7 +34,7 @@ class MyExtension(omni.ext.IExt):
     # ext_id is current extension id. It can be used with extension manager to query additional information, like where
     # this extension is located on filesystem.
     def on_startup(self, ext_id):
-        print("[gear.simulator] MyExtension startup")
+        print("[your.app.template] MyExtension startup")
 
         # stage
         stage = omni.usd.get_context().get_stage()
@@ -82,7 +82,7 @@ class MyExtension(omni.ext.IExt):
         """
         Build ui
         """
-        self._window = ui.Window("Gear simulator", width=300)
+        self._window = ui.Window("Your App Template", width=300)
         with self._window.frame:
             self._window.frame.style = julia_modeler_style
             with ui.VStack(height = 0):
@@ -175,7 +175,7 @@ class MyExtension(omni.ext.IExt):
         self._physics_update_sub = None
         self.stage_event_sub = None
 
-        print("[gear.simulator] MyExtension shutdown")
+        print("[your.app.template] MyExtension shutdown")
 
     ################################################# gear ##############################################
     

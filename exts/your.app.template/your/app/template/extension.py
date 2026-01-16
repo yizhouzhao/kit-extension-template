@@ -36,6 +36,12 @@ class MyExtension(omni.ext.IExt):
     def on_startup(self, ext_id):
         print("[your.app.template] MyExtension startup")
 
+        # set rendering settings:
+        carb.settings.get_settings().set_bool("/rtx/ecoMode/enabled", True)
+        FPS = 60.0
+        carb.settings.get_settings().set_bool("/app/runLoops/main/rateLimitEnabled", True)
+        carb.settings.get_settings().set_int("/app/runLoops/main/rateLimitFrequency", int( FPS))
+
         # stage
         stage = omni.usd.get_context().get_stage()
         UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.z)
@@ -164,11 +170,19 @@ class MyExtension(omni.ext.IExt):
                         ui.Line(style={"color":"gray", "margin_height": 8, "margin_width": 20})
                         CustomSliderWidget(min=0, max=3000, label="Light intensity:", default_val=1000, on_slide_fn = self.change_light_intensity)
 
+                with ui.CollapsableFrame("Examples", collapsed = False):
+                    with ui.VStack(height=0, spacing=0):
+                        ui.Line(style_type_name_override="HeaderLine")
+                        ui.Spacer(height = 4)
+                        ui.Button("Load stage and humanoid", height = 40, clicked_fn=self.example1)
+                        ui.Button("Add Camera (with ROS2)", height = 40, clicked_fn=self.example2)
+
                 with ui.CollapsableFrame("Debug", collapsed = False):
                     with ui.VStack(height=0, spacing=0):
                         ui.Line(style_type_name_override="HeaderLine")
                         ui.Spacer(height = 4)
-                        ui.Button("Debug", height = 40, name = "load_button", clicked_fn=self.debug)
+                        ui.Button("Debug", height = 40, clicked_fn=self.debug)
+
 
     def on_shutdown(self):
         self._timeline_sub = None
@@ -782,15 +796,37 @@ class MyExtension(omni.ext.IExt):
                         self.remove_driver_botton.visible = True
                         
                     
+    def example1(self):
+        """
+        Debug
+        """
+        from .humanoid_app_template import load_stage, load_humanoid, create_camera 
+        load_stage()
+        load_humanoid()
+
+    def example2(self):
+        """
+        """        
+        from .humanoid_app_template import load_stage, load_humanoid, create_camera, create_lidar
+
+        create_camera(
+            camera_path="/World/humanoid/torso_link/head_link/camera_left",
+            position=Gf.Vec3d(0, 0.05, 0.5),
+            orientation=Gf.Quatd(0.9238795, 0, -0.3826834, 0),
+            enable_ros2_bridge=True
+        )
+
+        create_camera(
+            camera_path="/World/humanoid/torso_link/head_link/camera_right",
+            position=Gf.Vec3d(0, -0.05, 0.5),
+            orientation=Gf.Quatd(0.9238795, 0, -0.3826834, 0),
+            enable_ros2_bridge=True
+        )
+
+        create_lidar(enable_ros2_bridge=True)
+
     def debug(self):
         """
         Debug
         """
-        carb.log_warn("Debug")
-        stage = omni.usd.get_context().get_stage()
-        prim_path = "/World/wheeled_humanoid/right_1_Link"
-        prim = stage.GetPrimAtPath(prim_path)
-        if prim.IsValid():
-            carb.log_warn("Prim is valid")
-        else:
-            carb.log_warn("Prim is not valid")
+        print("Debug button clicked")
